@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>D3 Heatmap + Choices.js</title>
+<title>D3 Heatmap + Tom Select</title>
 <script src="scripts/d3.v7.min.js"></script>
-<link rel="stylesheet" href="css/choices.min.css" />
-<script src="scripts/choices.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 <style>
   body {
-    background-color: black;
+    background-color: #333;
     margin: 0;
     padding: 0;
     display: flex;
@@ -20,12 +20,12 @@
   }
 
   #topbar {
-    width: 1200px;
+    width: 1250px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 20px;
-    background-color: black;
+    padding: 20px 10px 5px 10px;    
+    background-color: #333;
   }
 
   #header-image {
@@ -33,98 +33,88 @@
   }
 
   #header-image img {
-    height: 80px;
+    height: 110px;
     display: block;
   }
 
   #header {
-    width: 400px;
+    width: 440px;
     text-align: right;
   }
 
-  #reefSelect {
-    opacity: 0;
-    position: absolute;
-    pointer-events: none;
+  .ts-control {
+    background-color: #333;
+    color: white;
+    min-height: 40px;
+    padding: 4px;
+     flex-wrap: wrap;
+  }
+  
+
+.ts-control input {
+  flex-basis: 100%;
+  width: 100% !important;
+   margin-top: 4px;
+   color: white !important;
+}
+
+  .ts-dropdown, .ts-dropdown .option {
+    background-color: #333;
+    color: white;
   }
 
-.choices__inner .choices__placeholder,
-.choices[data-type*="select-multiple"] .choices__placeholder,
-.choices[data-type*="select-one"] .choices__placeholder {
-  color: white !important;
-  opacity: 1 !important;
-}
+  .ts-dropdown .active {
+    background-color: #555;
+    color: white;
+  }
 
-.choices__placeholder {
-  color: white !important;
-}
+  .item {
+    background-color: #005f75;
+    border: 1px solid #004a5c;
+    color: white;
+    padding: 2px 8px;
+    margin: 2px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+  }
 
-.choices__placeholder,
-.choices__placeholder:hover,
-.choices__placeholder:focus {
-  color: white !important;
-}
+  .item .remove {
+    margin-left: 4px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+  }
 
-.choices__inner input[type="search"] {
-  color: white !important;
-}
+  #heatmap-container {
+    flex: 1;
+    overflow: auto;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    transform: scale(0.9);
+    transform-origin: center;
+  }
 
-.choices__list--dropdown {
-  background-color: #333 !important;
-  border: 1px solid black !important;
-}
+  svg {
+    display: block;
+  }
 
-.choices__list--dropdown .choices__item--selectable.is-highlighted,
-.choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
-  background-color: #555 !important;
-  color: white !important;
-}
+  .cell {
+    stroke: none;
+  }
 
-.choices__inner {
-  background-color: #333 !important;
-  border: 1px solid black !important;
-}
-
-.choices__input {
-  background-color: #333 !important;
-  color: white !important;
-}
-
-.choices__list--multiple .choices__item {
-  background-color: #005f75 !important;
-  border: 1px solid #004a5c !important;
-  color: white !important;
-}
-
-#heatmap-container {
-  flex: 1;
-  overflow: auto;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  transform: scale(0.9);
-  transform-origin: center;
-}
-
-svg {
-  display: block;
-}
-
-.cell {
-  stroke: none;
-}
-
-.tooltip {
-  position: absolute;
-  text-align: center;
-  padding: 5px;
-  background: white;
-  border: 1px solid #ccc;
-  pointer-events: none;
-  font-size: 12px;
-  color: black;
-}
+  .tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 5px;
+    background: white;
+    border: 1px solid #ccc;
+    pointer-events: none;
+    font-size: 12px;
+    color: black;
+  }
 </style>
 </head>
 
@@ -135,7 +125,7 @@ svg {
     <img src="images/header.png" alt="Header Image">
   </div>
   <div id="header">
-    <select id="reefSelect" multiple></select>
+    <select id="reefSelect" multiple placeholder="Search by reef name or GBRMPA ID"></select>
   </div>
 </div>
 
@@ -144,7 +134,7 @@ svg {
 </div>
 
 <script>
-d3.csv("data/oisst.csv").then(function(data) {
+d3.csv("data/oisst.csv").then(data => {
   const meta = data.map(row => ({ id: row.ID, reef: row.Reef, lat: +row.lat }));
   const yearColumns = data.columns.filter(c => !['ID', 'Reef', 'lat'].includes(c));
   const matrix = data.map(row => yearColumns.map(year => +row[year]));
@@ -187,9 +177,8 @@ d3.csv("data/oisst.csv").then(function(data) {
             const degrees = Math.floor(absLat);
             const minutes = Math.round((absLat - degrees) * 60);
             return `${degrees}°${minutes.toString().padStart(2, '0')}'`;
-          } else {
-            return "";
           }
+          return "";
         }
       });
   }
@@ -242,56 +231,41 @@ d3.csv("data/oisst.csv").then(function(data) {
               .style("left", (event.pageX + 10) + "px")
               .style("top", (event.pageY - 15) + "px");
           })
-          .on("mouseout", function() {
-            tooltip.transition().duration(500).style("opacity", 0);
-          });
+          .on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
       });
+  }
+
+  function updateHeatmapContainerAlignment(isSubset) {
+    document.getElementById('heatmap-container').style.alignItems = isSubset ? 'center' : 'flex-start';
   }
 
   drawHeatmap(meta, matrix);
   updateHeatmapContainerAlignment(false);
 
-  function updateHeatmapContainerAlignment(isSubset) {
-    const container = document.getElementById('heatmap-container');
-    container.style.alignItems = isSubset ? 'center' : 'flex-start';
-  }
+  const sortedMeta = meta.sort((a, b) => a.reef.localeCompare(b.reef));
+  
+  const select = new TomSelect('#reefSelect', {
+    plugins: ['remove_button'],
+    placeholder: 'Search by reef name or GBRMPA ID',
+    closeAfterSelect: false,
+    options: meta.map(d => ({
+      value: d.id,
+      text: `${d.reef} [${d.id}]`
+    })),
+    onChange: function(selectedIds) {
+      const isSubset = selectedIds.length > 0;
 
-  const choices = new Choices('#reefSelect', {
-    removeItemButton: true,
-    placeholder: true,
-    searchEnabled: true,
-    searchPlaceholderValue: 'Search Reefs...',
-    shouldSort: false,
-    duplicateItemsAllowed: false,
-    itemSelectText: ''
-  });
+      updateHeatmapContainerAlignment(isSubset);
 
-  // ✅ SET CHOICES BEFORE MODIFYING PLACEHOLDER
-  choices.setChoices(meta.map(d => ({
-    value: d.id,
-    label: `${d.reef} [${d.id}]`
-  })), 'value', 'label', false);
+      if (!isSubset) {
+        drawHeatmap(meta, matrix, 'lat');
+        return;
+      }
 
-  // ✅ NOW MODIFY PLACEHOLDER SAFELY
-  setTimeout(() => {
-    const placeholder = document.querySelector('.choices__placeholder');
-    if (placeholder) placeholder.textContent = 'Search by reef name or GBRMPA ID';
-  }, 50);
-
-  document.getElementById('reefSelect').addEventListener('change', function() {
-    const selectedIds = Array.from(this.selectedOptions).map(option => option.value);
-    const isSubset = selectedIds.length > 0;
-
-    updateHeatmapContainerAlignment(isSubset);
-
-    if (!isSubset) {
-      drawHeatmap(meta, matrix, 'lat');
-      return;
+      const filteredMeta = meta.filter(d => selectedIds.includes(d.id));
+      const filteredMatrix = filteredMeta.map(d => matrix[meta.findIndex(m => m.id === d.id)]);
+      drawHeatmap(filteredMeta, filteredMatrix, 'id');
     }
-
-    const filteredMeta = meta.filter(d => selectedIds.includes(d.id));
-    const filteredMatrix = filteredMeta.map(d => matrix[meta.findIndex(m => m.id === d.id)]);
-    drawHeatmap(filteredMeta, filteredMatrix, 'id');
   });
 });
 </script>
