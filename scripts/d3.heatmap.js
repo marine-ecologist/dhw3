@@ -1,11 +1,4 @@
-// Canvas Version: 0.3.0 ✅
 
-// ✅ Clean rebuild with enforced rowHeight rendering
-// ✅ Removed interfering CSS (scale, fixed height overrides)
-// ✅ Subset view uses rowHeight = 20, reset to slider on clear
-// ✅ Show reef IDs when subset is active
-
-// START
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -34,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
       header.style.zIndex = '100';
       header.style.display = 'flex';
       header.style.justifyContent = 'space-between';
-      header.style.width = '85%';
+      header.style.width = '65%';
       header.style.boxSizing = 'border-box';
       header.style.padding = '5px 40px 20px 280px';
       heatmapContainer.parentNode.insertBefore(header, heatmapContainer);
@@ -47,24 +40,24 @@ document.addEventListener("DOMContentLoaded", function() {
     leftContainer.style.alignItems = 'center';
     leftContainer.style.gap = '20px';
 
-   const datasetWrapper = document.createElement('div');
-	datasetWrapper.style.display = 'flex';
-	datasetWrapper.style.alignItems = 'center';
-	datasetWrapper.style.gap = '6px'; // space between icon and dropdown
+    const datasetWrapper = document.createElement('div');
+    datasetWrapper.style.display = 'flex';
+    datasetWrapper.style.alignItems = 'center';
+    datasetWrapper.style.gap = '6px';
 
-	const datasetLabel = document.createElement('i');
-	datasetLabel.className = 'fa-solid fa-database';
-	datasetLabel.title = 'Select dataset';
-	datasetLabel.style.color = 'white';
-	datasetLabel.style.fontSize = '16px';
-	datasetLabel.style.cursor = 'pointer';
+    const datasetLabel = document.createElement('i');
+    datasetLabel.className = 'fa-solid fa-database';
+    datasetLabel.title = 'Select dataset';
+    datasetLabel.style.color = 'white';
+    datasetLabel.style.fontSize = '16px';
+    datasetLabel.style.cursor = 'pointer';
 
-	const datasetSelect = document.createElement('select');
-	datasetSelect.style.width = '180px';
-	datasetSelect.style.background = '#333';
-	datasetSelect.style.color = 'white';
-	datasetSelect.style.border = '1px solid #004a5c';
-	datasetSelect.style.borderRadius = '4px';
+    const datasetSelect = document.createElement('select');
+    datasetSelect.style.width = '180px';
+    datasetSelect.style.background = '#333';
+    datasetSelect.style.color = 'white';
+    datasetSelect.style.border = '1px solid #004a5c';
+    datasetSelect.style.borderRadius = '4px';
 
     const datasets = [
       { name: 'CoralTemp v3.1', value: 'data/CRW_DHWmax.csv' },
@@ -89,46 +82,44 @@ document.addEventListener("DOMContentLoaded", function() {
     datasetWrapper.appendChild(datasetSelect);
     leftContainer.appendChild(datasetWrapper);
 
-const spacer = document.createElement('div');
-spacer.style.width = '30px';
-leftContainer.appendChild(spacer);
+    const spacer = document.createElement('div');
+    spacer.style.width = '30px';
+    leftContainer.appendChild(spacer);
 
     const sliderWrapper = document.createElement('div');
-sliderWrapper.style.display = 'flex';
-sliderWrapper.style.alignItems = 'center';
-sliderWrapper.style.gap = '8px';
-sliderWrapper.style.color = 'white';
+    sliderWrapper.style.display = 'flex';
+    sliderWrapper.style.alignItems = 'center';
+    sliderWrapper.style.gap = '8px';
+    sliderWrapper.style.color = 'white';
 
-// Left icon
-const zoomOutIcon = document.createElement('i');
-zoomOutIcon.className = 'fa-solid fa-magnifying-glass-minus';
+    const zoomOutIcon = document.createElement('i');
+    zoomOutIcon.className = 'fa-solid fa-magnifying-glass-minus';
 
-// Right icon
-const zoomInIcon = document.createElement('i');
-zoomInIcon.className = 'fa-solid fa-magnifying-glass-plus';
+    const zoomInIcon = document.createElement('i');
+    zoomInIcon.className = 'fa-solid fa-magnifying-glass-plus';
 
-// Slider
-const slider = document.createElement('input');
-slider.type = 'range';
-slider.min = 0.25;
-slider.max = 20;
-slider.step = 0.1;
-slider.value = currentRowHeight;
-slider.style.cursor = 'pointer';
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.min = 0.25;
+    slider.max = 20;
+    slider.step = 0.1;
+    slider.value = currentRowHeight;
+    slider.style.cursor = 'pointer';
 
-slider.addEventListener('input', function() {
-  userSelectedRowHeight = +this.value;
-  if (currentSelectedReefs.length === 0) {
-    currentRowHeight = userSelectedRowHeight;
-    drawHeatmap(currentMeta, currentMatrix);
-  }
-});
+    slider.addEventListener('input', function() {
+      userSelectedRowHeight = +this.value;
+      if (currentSelectedReefs.length === 0) {
+        currentRowHeight = userSelectedRowHeight;
+        drawHeatmap(currentMeta, currentMatrix);
+      }
+    });
 
-sliderWrapper.appendChild(zoomOutIcon);
-sliderWrapper.appendChild(slider);
-sliderWrapper.appendChild(zoomInIcon);
+    sliderWrapper.appendChild(zoomOutIcon);
+    sliderWrapper.appendChild(slider);
+    sliderWrapper.appendChild(zoomInIcon);
 
-leftContainer.appendChild(sliderWrapper);
+    leftContainer.appendChild(sliderWrapper);
+    rowHeightSlider = slider;
 
     const rightContainer = document.createElement('div');
     rightContainer.style.display = 'flex';
@@ -140,26 +131,22 @@ leftContainer.appendChild(sliderWrapper);
     selectElement.multiple = true;
     selectElement.style.width = '400px';
 
-    const clearButton = document.createElement('button');
-    clearButton.innerHTML = 'Clear<br>selection';
-    clearButton.style.background = '#005f75';
-    clearButton.style.color = 'white';
-    clearButton.style.border = 'none';
-    clearButton.style.padding = '0 12px';
-    clearButton.style.borderRadius = '4px';
-    clearButton.style.cursor = 'pointer';
-    clearButton.style.lineHeight = '1.2';
-
-    clearButton.addEventListener('click', () => {
-      if (selectElement.tomselect) {
-        selectElement.tomselect.clear();
-        currentSelectedReefs = [];
-        currentRowHeight = userSelectedRowHeight;
-        rowHeightSlider.value = userSelectedRowHeight;
-        drawHeatmap(currentMeta, currentMatrix);
-      }
-    });
-
+    const clearButton = document.createElement('i');
+	clearButton.className = 'fa-solid fa-circle-xmark';
+	clearButton.title = 'Clear selection';
+	clearButton.style.fontSize = '20px';
+	clearButton.style.color = '#FFF';
+	clearButton.style.cursor = 'pointer';
+	
+	clearButton.addEventListener('click', () => {
+	  if (selectElement.tomselect) {
+	    selectElement.tomselect.clear();
+	    currentSelectedReefs = [];
+	    currentRowHeight = userSelectedRowHeight;
+	    rowHeightSlider.value = userSelectedRowHeight;
+	    drawHeatmap(currentMeta, currentMatrix);
+	  }
+	});
     rightContainer.appendChild(selectElement);
     rightContainer.appendChild(clearButton);
 
@@ -168,47 +155,15 @@ leftContainer.appendChild(sliderWrapper);
 
     const style = document.createElement('style');
     style.textContent = `
-      body {
-        background-color: #333;
-        color: white;
-        font-family: Helvetica;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        align-items: center;
-      }
-      .tooltip {
-        position: absolute;
-        text-align: left;
-        padding: 5px;
-        background: white;
-        border: 1px solid #ccc;
-        pointer-events: none;
-        font-size: 12px;
-        color: black;
-        z-index: 1000;
-        width: 120px;
-      }
-      #heatmap-container {
-        flex: 1;
-        overflow: auto;
-        margin-top: 0;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        position: relative;
-      }
-      svg {
-        display: block;
-      }
-      .cell {
-        stroke: none;
-      }
+      body { background-color: #333; color: white; font-family: Helvetica; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; align-items: center; }
+      .search-icon {font-size: 14px; position: relative; top: 1px;}
+      .tooltip { position: absolute; text-align: left; padding: 5px; background: white; border: 1px solid #ccc; pointer-events: none; font-size: 12px; color: black; z-index: 1000; width: 120px; }
+      #heatmap-container { flex: 1; overflow: auto; margin-top: 0; display: flex; justify-content: center; align-items: flex-start; position: relative; }
+      .fa-circle-xmark:hover {color: #FF8888;}
+      svg { display: block; }
+      .cell { stroke: none; }
     `;
     document.head.appendChild(style);
-
     reefSelect = selectElement;
   }
 
@@ -217,7 +172,6 @@ leftContainer.appendChild(sliderWrapper);
       currentMeta = data.map(row => ({ id: row.ID, reef: row.Reef, lat: +row.lat }));
       yearColumns = data.columns.filter(c => !['ID', 'Reef', 'lat'].includes(c));
       currentMatrix = data.map(row => yearColumns.map(year => +row[year]));
-
       setupTomSelect(currentMeta);
       drawHeatmap(currentMeta, currentMatrix);
     });
@@ -232,9 +186,7 @@ leftContainer.appendChild(sliderWrapper);
     d3.selectAll('.tooltip').remove();
 
     const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
-
     const rowHeight = getRowHeight();
-
     heatmapContainer.style.alignItems = currentSelectedReefs.length > 0 ? 'center' : 'flex-start';
 
     const cellWidth = fixedHeatmapWidth / yearColumns.length;
@@ -244,31 +196,36 @@ leftContainer.appendChild(sliderWrapper);
 
     const container = svg.append("g").attr("transform", `translate(250,40)`);
 
+	const tsControl = document.querySelector('.ts-control');
+	if (tsControl && !tsControl.querySelector('.search-icon')) {
+	  const icon = document.createElement('i');
+	  icon.className = 'fa-solid fa-magnifying-glass search-icon';
+	  icon.style.marginRight = '8px';
+	  icon.style.color = 'grey';
+	  tsControl.prepend(icon);
+	}
+
     const seen = new Set();
     svg.selectAll(".rowLabel")
       .data(meta)
       .join("text")
       .attr("class", "rowLabel")
-      .attr("x", 250 - 5)
+      .attr("x", 245)
       .attr("y", (d, i) => 40 + i * rowHeight + rowHeight * 0.5)
       .attr("text-anchor", "end")
       .attr("alignment-baseline", "middle")
       .attr("fill", "white")
       .attr("font-size", "15px")
       .text(d => {
-        if (currentSelectedReefs.length > 0) {
-          return `${d.reef} [${d.id}]`;
-        } else {
-          const roundedLat = d.lat.toFixed(1);
-          if (!seen.has(roundedLat)) {
-            seen.add(roundedLat);
-            const absLat = Math.abs(d.lat);
-            const degrees = Math.floor(absLat);
-            const minutes = Math.round((absLat - degrees) * 60);
-            return `${degrees}°${minutes.toString().padStart(2, '0')}'`;
-          }
-          return "";
+        if (currentSelectedReefs.length > 0) return `${d.reef} [${d.id}]`;
+        const roundedLat = d.lat.toFixed(1);
+        if (!seen.has(roundedLat)) {
+          seen.add(roundedLat);
+          const degrees = Math.floor(Math.abs(d.lat));
+          const minutes = Math.round((Math.abs(d.lat) - degrees) * 60);
+          return `${degrees}°${minutes.toString().padStart(2, '0')}'`;
         }
+        return "";
       });
 
     svg.selectAll(".colLabel")
@@ -276,17 +233,13 @@ leftContainer.appendChild(sliderWrapper);
       .join("text")
       .attr("class", "colLabel")
       .attr("x", (d, i) => 250 + i * cellWidth + cellWidth / 2)
-      .attr("y", 40 - 10)
+      .attr("y", 30)
       .attr("text-anchor", "start")
       .attr("alignment-baseline", "middle")
       .attr("fill", "white")
       .attr("font-size", "12px")
-      .attr("transform", (d, i) => `rotate(-45, ${250 + i * cellWidth + cellWidth / 2}, ${40 - 10})`)
+      .attr("transform", (d, i) => `rotate(-45, ${250 + i * cellWidth + cellWidth / 2}, 30)`)
       .text(d => d);
-
-    const colorScale = d3.scaleLinear()
-      .domain([0, 3, 6, 9, 12, 15, 18, 21])
-      .range(["#006f99", "#00A6E5", "#FFD700", "#FF8C00", "#B20000", "#660000", "#3D0000", "#3D0000"]);
 
     container.selectAll("g").remove();
 
@@ -302,25 +255,18 @@ leftContainer.appendChild(sliderWrapper);
         .attr("x", d => d.colIndex * cellWidth)
         .attr("width", cellWidth)
         .attr("height", rowHeight)
-        .attr("fill", d => isNaN(d.value) ? "#000" : colorScale(d.value))
+        .attr("fill", d => isNaN(d.value) ? "#000" : d3.scaleLinear()
+          .domain([0, 3, 6, 9, 12, 15, 18, 21])
+          .range(["#006f99", "#00A6E5", "#FFD700", "#FF8C00", "#B20000", "#660000", "#3D0000", "#3D0000"])(d.value))
         .on("mouseover", function(event, d) {
-      const m = meta[d.rowIndex];
-      const year = yearColumns[d.colIndex];
-      tooltip.transition().duration(200).style("opacity", 0.9);
-      tooltip.html(
-        `<b>ID:</b> ${m.id}<br>
-         <b>Reef:</b> ${m.reef}<br>
-         <b>Latitude:</b> ${m.lat}<br>
-         <b>Year:</b> ${year}<br>
-         <b>DHW:</b> ${d.value}`
-      )
-      .style("left", (event.pageX + 10) + "px")
-      .style("top", (event.pageY - 15) + "px");
-    })
-    .on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
-        
-        
-        
+          const m = meta[d.rowIndex];
+          const year = yearColumns[d.colIndex];
+          tooltip.transition().duration(200).style("opacity", 0.9);
+          tooltip.html(`<b>ID:</b> ${m.id}<br><b>Reef:</b> ${m.reef}<br><b>Latitude:</b> ${m.lat}<br><b>Year:</b> ${year}<br><b>DHW:</b> ${d.value}`)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 15) + "px");
+        })
+        .on("mouseout", () => tooltip.transition().duration(500).style("opacity", 0));
     });
   }
 
@@ -328,6 +274,7 @@ leftContainer.appendChild(sliderWrapper);
     if (reefSelect.tomselect) reefSelect.tomselect.destroy();
 
     const sortedOptions = meta.slice().sort((a, b) => a.reef.localeCompare(b.reef));
+
 
     new TomSelect(reefSelect, {
       plugins: ['remove_button'],
@@ -338,9 +285,10 @@ leftContainer.appendChild(sliderWrapper);
       items: currentSelectedReefs,
       onItemAdd: function() {
         currentSelectedReefs = this.items;
-        currentRowHeight = 20;
-        rowHeightSlider.value = currentRowHeight;
-        applyFilter();
+  		currentRowHeight = 20;
+  		rowHeightSlider.value = currentRowHeight;
+  		this.setTextboxValue(''); // ✅ Clears search input
+  		applyFilter();
       },
       onItemRemove: function() {
         currentSelectedReefs = this.items;
@@ -362,7 +310,10 @@ leftContainer.appendChild(sliderWrapper);
       drawHeatmap(currentMeta, currentMatrix);
     } else {
       const filteredMeta = currentMeta.filter(d => currentSelectedReefs.includes(d.id));
-      const filteredMatrix = filteredMeta.map(d => currentMatrix[currentMeta.findIndex(m => m.id === d.id)]);
+      const filteredMatrix = filteredMeta.map(d => {
+        const idx = currentMeta.findIndex(m => m.id === d.id);
+        return idx !== -1 ? currentMatrix[idx] : [];
+      });
       drawHeatmap(filteredMeta, filteredMatrix);
     }
   }
