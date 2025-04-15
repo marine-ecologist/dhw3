@@ -1,0 +1,15 @@
+name: "D3HW"
+title: "DHW metrics"
+output_dir: "../docs"
+
+output:
+  html_document:
+    theme: flatly  # Quarto uses Bootstrap 5 themes, so pick closest here
+    code_folding: hide
+    toc: false
+    toc_depth: 2
+    number_sections: false
+    includes:
+      in_header: includes/head.html
+    highlight: tango
+    mathjax: default

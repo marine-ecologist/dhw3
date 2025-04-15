@@ -1,0 +1,104 @@
+---
+title: "DHW and climate change"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Degree Heating Weeks
+
+Corals are sensitive to warmer temperatures: at around one degree Celsius (1 °C) above the highest annual mean temperature corals exceed their "bleaching threshold". Degree Heating Weeks (DHW) are a useful metric of cumulative heatstress (i.e. how many times in the last twelve weeks has the temperature reached or exceeded the bleaching threshold?). From [NOAA](https://coralreefwatch.noaa.gov/product/5km/tutorial/crw10a_dhw_product.php):
+
+*"By the time the accumulated heat stress (the DHW) reaches 4 °C-weeks, you can expect to see coral bleaching reef-wide, especially in more sensitive coral species. By the time the DHW value reaches 8 °C-weeks or higher, you are likely to see reef-wide coral bleaching with mortality of heat-sensitive corals"*
+
+## Corals, DHW, the Great Barrier Reef, and climate change
+
+The Great Barrier Reef is undergoing rapid warming in the past three decades. A total of nine coral bleaching events have been recorded in 1998, 2002, 2016, 2017, 2018, 2020, 2022, 2024, and 2025. These events have resulted in [mass mortality of corals](https://www.nature.com/articles/nature21707), impacting [coral population structures](https://royalsocietypublishing.org/doi/full/10.1098/rspb.2020.1432), [transforming assemblages](https://www.nature.com/articles/s41586-018-0041-2), [delaying recovery](https://onlinelibrary.wiley.com/doi/full/10.1111/gcb.13707) and [restructuring entire ecosytems](https://www.nature.com/articles/s41586-018-0359-9).
+
+Long-term timeseries data helps prevent normalising the current state by providing historical context. For example, here is a timeseries for 560 reefs from the Lama Lama Sea Country to the Wuthathi sea country:
+
+```{r, warning=FALSE, message=FALSE, fig.width=8, fig.height=4}
+
+library(tidyverse)
+library(ggplot2)
+
+
+GBR_DHW_CRW <- read.csv("/Users/rof011/dhw3/data/CRW_DHWmax.csv") |> 
+  pivot_longer(
+    cols = starts_with("X"),
+    names_to = "year",
+    values_to = "dhw"
+  ) %>%
+  mutate(
+    year = as.numeric(str_remove(year, "^X"))
+  ) |> filter(lat < -11) |> filter(lat > -14)
+
+dhw_numeric_breaks <- c(0, 3, 6, 9, 12, 15, 18, 21)  # Adjust numeric breaks
+dhw_colour_breaks <- c("#006f99", "#00A6E5", "#FFD700", "#FF8C00", "#B20000", "#660000", "#3D0000")
+
+
+ggplot() + theme_bw() +
+  geom_tile(data = GBR_DHW_CRW, aes(x = year, y = lat, fill = dhw), linewidth = 0) +
+  scale_fill_gradientn(
+    limits = c(0, 21),
+    name = expression(DHW[max]),
+    na.value = "transparent",
+    breaks = dhw_numeric_breaks,
+    labels = dhw_numeric_breaks,
+    colours = dhw_colour_breaks,
+    values = scales::rescale(dhw_numeric_breaks, from = c(0, 20))
+  ) +
+  xlab("Year") + ylab("Latitude") +
+  # scale_y_continuous(
+  #   expand = c(0, 0),
+  #   limits = c(-11,-13),
+  #   breaks = seq(-11,-13, length.out=5), 
+  #   labels = seq(-11,-13, length.out=5)
+  # ) +
+   scale_x_continuous(
+    expand = c(0, 0),
+    limits = c(1980, 2025),
+    breaks = seq(1980, 2025, 2),
+    sec.axis = dup_axis(name = "Year")
+  ) +
+  theme(
+    # Backgrounds
+    plot.background = element_rect(fill = "#333", color = NA),
+    panel.background = element_rect(fill = "#333", color = NA),
+    panel.grid = element_blank(),
+    
+    # Axes
+    axis.title = element_text(color = "white"),
+    axis.text = element_text(color = "white"),
+    axis.text.x = element_text(angle = 90, hjust = 1, color = "white"),
+    axis.text.y = element_text(color = "white", hjust=-0.2),
+    axis.ticks = element_line(color = "white"),
+    
+    # Secondary axis text and title
+    axis.title.x.top = element_text(color = "white"),
+    axis.text.x.top = element_text(color = "white"),
+    
+    # Legend
+    legend.background = element_rect(fill = "#333", color = NA),
+    legend.key = element_rect(fill = "#333", color = NA),
+    legend.text = element_text(color = "white"),
+    legend.title = element_text(color = "white"),
+    
+    # Titles
+    plot.title = element_text(color = "white"),
+    plot.subtitle = element_text(color = "white"),
+    plot.caption = element_text(color = "white")
+  )
+
+
+```
+
+For a longer term pre-satellite perspective on the last two decades of climate change and ocean temperatures on the Great Barrier Reef:
+
+*"The January–March Coral Sea heat extremes in 2024, 2017 and 2020 (in order of descending mean SST anomalies) were the warmest in 400 years, exceeding the 95th-percentile uncertainty limit of our reconstructed pre-1900 maximum. The 2016, 2004 and 2022 events were the next warmest, exceeding the 90th-percentile limit"*
+
+![](images/41586_2024_7672_Fig3_HTML.png)
+
+Henley et al 2024 [Nature](https://www.nature.com/articles/s41586-024-07672-x)

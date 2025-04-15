@@ -1,0 +1,21 @@
+/*-- scss:defaults --*/
+
+// Base document colors
+$body-bg:        #333333;   // dark gray
+$body-color:     #ffffff;   // white
+$link-color:     #75AADB;   // soft blue
+
+// Navbar colors
+$navbar-bg:      #555555;   // medium-dark gray
+$navbar-fg:      #f8f8f8;   // very light gray
+
+// Code blocks
+$code-block-bg-alpha: 1;    // fully opaque background
+
+
+// Limit width of navbar contents and center
+.navbar .container-fluid {
+  max-width: 1000px;   // ✅ Adjust width here
+  margin-left: auto;
+  margin-right: auto;
+}
