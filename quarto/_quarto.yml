@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: "../docs"
 
 website:
   title: "<img src='images/headerimage.png' alt='DHW Logo' height='75' style='margin-top:-6px;'>"
