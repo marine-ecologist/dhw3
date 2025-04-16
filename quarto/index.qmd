@@ -13,12 +13,9 @@ output:
 <link href="path/to/tom-select.bootstrap5.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-```
-
 
 <script src="path/to/d3.heatmap.js" defer></script>
 
 <div id="heatmap-container">
   <svg></svg>
 </div>
- 
