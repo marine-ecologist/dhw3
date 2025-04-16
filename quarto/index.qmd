@@ -3,9 +3,16 @@ title: "D3HW"
 output:
   html_document:
     toc: false
-    includes:
-      in_header: preload.html
+
+
 ---
+
+<style>
+  h1.title {
+    display: none;
+  }
+</style>
+
 
 ```{=html}
 <script src="https://raw.githubusercontent.com/marine-ecologist/dhw3/refs/heads/main/scripts/d3.heatmap.js" defer></script>
