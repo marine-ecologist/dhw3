@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  let currentDataset = 'data/CRW_DHWmax.csv';
+  let currentDataset = 'https://raw.githubusercontent.com/marine-ecologist/dhw3/refs/heads/main/data/CRW_DHWmax.csv';
   let currentSelectedReefs = [];
   let currentRowHeight = 1.5;
   let userSelectedRowHeight = currentRowHeight;
@@ -60,9 +60,9 @@ document.addEventListener("DOMContentLoaded", function() {
     datasetSelect.style.borderRadius = '4px';
 
     const datasets = [
-      { name: 'CoralTemp v3.1', value: 'data/CRW_DHWmax.csv' },
-      { name: 'OISST v2.1', value: 'data/OISST_DHWmax.csv' },
-      { name: 'ERA v5', value: 'data/ERA5_DHWmax.csv' }
+      { name: 'CoralTemp v3.1', value: 'https://raw.githubusercontent.com/marine-ecologist/dhw3/refs/heads/main/data/CRW_DHWmax.csv' },
+      { name: 'OISST v2.1', value: 'https://raw.githubusercontent.com/marine-ecologist/dhw3/refs/heads/main/data/OISST_DHWmax.csv' },
+      { name: 'ERA v5', value: 'https://raw.githubusercontent.com/marine-ecologist/dhw3/refs/heads/main/data/ERA5_DHWmax.csv' }
     ];
 
     datasets.forEach(d => {
