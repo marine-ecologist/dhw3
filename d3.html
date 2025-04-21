@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHW Heatmap</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tomtom-international/web-sdk-maps@6.18.0/dist/maps.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+
+  <div id="header"></div>
+  <div id="col-labels-wrapper">
+    <svg id="col-labels-svg"></svg>
+  </div>
+  <div id="heatmap-container">
+    <div id="heatmap-scroll">
+      <svg id="heatmap-svg"></svg>
+    </div>
+  </div>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+  <script src="scripts/d3.heatmap.js"></script>
+</body>
+</html>
