@@ -1,0 +1,59 @@
+---
+title: "Images"
+format: html
+editor: source
+---
+
+```{html}
+
+
+
+<link rel="stylesheet" href="assets/natural-gallery-js/natural-gallery.css">
+<link rel="stylesheet" href="assets/natural-gallery-js/themes/natural.css">
+
+
+ <div id="body" style="overflow:auto; min-height:100%; height:100%;">
+                <div id="gallery"></div>
+            </div>
+
+<script>
+  
+import {Natural, Masonry, Square} from './assets/natural-gallery-js/natural-gallery.js';
+
+window.addEventListener('load', function() {
+
+    // Get reference of gallery container
+    var elementRef = document.getElementById('gallery');
+
+    // Init gallery according to wanted format
+    var gallery = new Natural(elementRef); // or
+    var gallery = new Masonry(elementRef); // or
+    var gallery = new Square(elementRef);
+
+    // Init the gallery
+    gallery.init();
+})
+
+
+// Convert your format into natural-gallery's format.
+var items = [
+     {
+        thumbnailSrc: string, // link to thumbnail image
+        enlargedSrc: string, // link to enlarged image
+        enlargedWidth: number,
+        enlargedHeight: number,
+        title: string, // Title for the label or button
+        link: string, // Link, transforms label into button
+        linkTarget: string // _blank | _top | _self | _parent
+        color: string // HEX color for background before image display
+        backgroundPosition: string // Any value compatible with css background-position. Default: center
+        backgroundSize: string // Any value compatible with css background-size. Default : cover
+    }
+];
+
+// Set the entire collection
+gallery.setItems(items);
+
+</script>
+
+```

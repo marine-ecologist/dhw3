@@ -1,5 +1,7 @@
 ---
 title: "D3HW"
+execute:
+  engine: knitr
 format:
   html:
     toc: false
@@ -8,22 +10,25 @@ format:
 
 <style>
   h1.title { display: none; }
+  
+   main.content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
 </style>
 
-```{=html}
-<iframe
-  width="1550"
-  height="1200"
-  src="d3.html"
-  frameborder="0"
-  allowfullscreen
+:::{.column-page}
+
+
+<iframe 
+  width="1450" 
+  height="6000" 
+  src="d3.html" 
   scrolling="no"
-  title="DHW Heatmap"
-  style="
-    display: block;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%) translateX(-200px);
-  "
-></iframe>
-```
+  title="Webpage example">
+</iframe>
+
+:::
+
+

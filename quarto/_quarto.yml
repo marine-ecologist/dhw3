@@ -3,17 +3,13 @@ project:
   output-dir: ../docs
 
 website:
-  title: "<img src='images/headerimage.png' alt='DHW Logo' height='75' style='margin-top:-6px;'>"
+  title: "<img src='images/headerimage.png' alt='DHW Logo' height='60' style='margin-top:-6px;'>"
   navbar:
     background: dark
     foreground: light
     left:
       - text: About
-        menu:
-          - text: About D3HW
-            href: about.qmd
-          - text: Contact
-            href: contact.qmd
+        href: about.qmd
       - text: Code
         menu:
           - text: Data extraction

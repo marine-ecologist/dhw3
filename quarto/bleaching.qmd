@@ -1,49 +1,16 @@
 ---
-title: ""
-author: "George Roff"
-date: "4/15/2025"
-format: 
-  html:
-    code-fold: true
+title: "FAQ"
+format: html
+editor: visual
 ---
 
-## About D^~3~^HW
-
-D^~3~^W is a data visualisation of the annual heatstress (DHW) for each reef on the Great Barrier Reef. Each row represents a reef (4306 reefs in total), each column represents the amount of heat stress experienced (between 1981 and 2025). The colors represent the maximum heat stress in a given year: in simple terms,
-
-> [normal]{style="color: #00A6E5;"}• [coral bleaching]{style="color: #FFD700;"} • [strong coral bleaching]{style="color: #FF8C00;"} • [likely catastrophic bleaching]{style="color: #CC0000;"}
-
-D^~3~^HW was created using the [D3 library](%22If%20a%20tree%20falls%20in%20a%20forest%20and%20no%20one%20is%20around%20to%20hear%20it,%20does%20it%20make%20a%20sound?%22) in javascript - hence the term D^~3~^ egree Heating Weeks.
-
-## Degree Heating Weeks explained
+## Degree Heating Weeks
 
 Corals are sensitive to warmer temperatures: at around one degree Celsius (1 °C) above the highest annual mean temperature corals exceed their "bleaching threshold". Degree Heating Weeks (DHW) are a useful metric of cumulative heatstress (i.e. how many times in the last twelve weeks has the temperature reached or exceeded the bleaching threshold?). From [NOAA](https://coralreefwatch.noaa.gov/product/5km/tutorial/crw10a_dhw_product.php):
 
 > "By the time the accumulated heat stress (the DHW) reaches 4 °C-weeks, you can expect to see coral bleaching reef-wide, especially in more sensitive coral species. By the time the DHW value reaches 8 °C-weeks or higher, you are likely to see reef-wide coral bleaching with mortality of heat-sensitive corals"
 
-## **Why D^~3~^HW?**
-
-Sea Surface Temperature (SST) data is widely accessible from various satellites, but is often hard to visualise. Questions like "*how bad is this year's bleaching compared to last year*?", and "*How many reefs are affected by bleaching*?" are difficult to map due to the size of the Great Barrier Reef, and time-series charts often mask the impacts on individual reefs.
-
-D^~3~^HW aims to i) simplify long-term trends in temperature and climate change on the Great Barrier Reef, and ii) highlight that intense heatwaves on the Great Barrier Reef are a recent phenomena, and not a "normal" state.
-
-## GBR **D^~3~^HW**
-
-The impact of coral bleaching on the Great Barrier Reef (GBR) takes time to assess through surveys, yet the link between DHW and both coral bleaching and coral mortality are [well](https://www.nature.com/articles/nature21707) [documented](https://peerj.com/articles/7473/) [on](https://www.publish.csiro.au/MF/MF99078) [the](https://www.cell.com/current-biology/fulltext/S0960-9822(21)01490-1) [Great](https://aslopubs.onlinelibrary.wiley.com/doi/full/10.1002/lol2.10456) [Barrier](https://link.springer.com/article/10.1007/s00338-009-0502-z) [Reef](https://www.coralreefwatch.noaa.gov/satellite/analyses_guidance/gbr_heat_stress_event_2020_status_asof20200227.pdf).
-
-Unlike the recent bushfires where the impacts of [climate-change driven heatwaves](https://www.qld.gov.au/emergency/dealing-disasters/disaster-types/bushfires/bushfire-aware/climate-change-and-bushfire) are clearly visible, the recent mass coral bleaching events on the Great Barrier Reef have largely gone by unreported as they unfolded - despite satellite data being readily available in near real-time.
-
-As one journalist put to me recently: "*if a bleaching event is underway on the GBR and no reporting on the temperature data, how can anyone know the size and scale that these events are actually occuring*?"
-
-D^~3~^HW aims to make satellite data more accessible to non-scientific audiences, allowing comparisons between current heat-stress levels with previous events, and facilitating tracking of coral bleaching events as they occur in realtime.
-
-### Reef-level tracking of annual DHW
-
-D^~3~^HW aims to make it easier to visualise time-series of Degree Heating Weeks for any reef on the GBR. For example, comparing Moore Reef (Cairns), Rib Reef (Townsville), and Wistari Reef (southern GBR) highlights how Wistari in the south avoided heatstress for nearly a decade prior to the 2024 mass bleaching event, while Moore Reef and Rib Reef further north have been impacted repeatedly by heatwaves in 2016, 2017, 2020, 2021, 2022, and 2024.
-
-![](images/subset.png)
-
-## Mass coral bleaching and the GBR
+## Corals, DHW, the Great Barrier Reef, and climate change
 
 The Great Barrier Reef is undergoing rapid warming in the past three decades. A total of nine coral bleaching events have been recorded in 1998, 2002, 2016, 2017, 2018, 2020, 2022, 2024, and 2025. These events have resulted in [mass mortality of corals](https://www.nature.com/articles/nature21707), impacting [coral population structures](https://royalsocietypublishing.org/doi/full/10.1098/rspb.2020.1432), [transforming assemblages](https://www.nature.com/articles/s41586-018-0041-2), [delaying recovery](https://onlinelibrary.wiley.com/doi/full/10.1111/gcb.13707) and [restructuring entire ecosytems](https://www.nature.com/articles/s41586-018-0359-9).
 
@@ -183,10 +150,10 @@ ggplot() + theme_bw() +
 
 ```
 
-## Datasets used in D^~3~^HW: {.tabset}
+For a longer term pre-satellite perspective on the last two decades of climate change and ocean temperatures on the Great Barrier Reef:
 
-DHW uses
-
-## Contact {.tabset}
-
-DHW uses
+> "The January–March Coral Sea heat extremes in 2024, 2017 and 2020 (in order of descending mean SST anomalies) were the warmest in 400 years, exceeding the 95th-percentile uncertainty limit of our reconstructed pre-1900 maximum. The 2016, 2004 and 2022 events were the next warmest, exceeding the 90th-percentile
+>
+> ![](images/41586_2024_7672_Fig3_HTML-01.png)
+>
+> Henley et al 2024 \[Nature\](https://www.nature.com/articles/s41586-024-07672-x)
