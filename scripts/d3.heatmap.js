@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr("fill", "white")
       .attr("font-size", "12px")
       .attr("transform", (d, i) => `rotate(-45, ${66 + i * cellWidth + cellWidth / 2}, 40)`) // adjust rotation center
-      .text(d => d); 
+      .text(d => d);
 
       const seen = new Set();
       svg.selectAll(".rowLabel")
@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function applyFilter() {
     const scroll = document.getElementById("heatmap-scroll");
-  
+
     if (currentSelectedReefs.length === 0) {
       scroll.classList.remove("centered"); // remove centering when full set
       drawHeatmap(currentMeta, currentMatrix);
@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const idx = currentMeta.findIndex(m => m.id === d.id);
         return idx !== -1 ? currentMatrix[idx] : [];
       });
-  
+
       scroll.classList.add("centered"); // ✅ center filtered result
       drawHeatmap(filteredMeta, filteredMatrix);
     }
@@ -331,9 +331,9 @@ document.addEventListener("DOMContentLoaded", function() {
     slider.step = 0.1;
     slider.value = currentRowHeight;
     slider.style.cursor = 'pointer';
-    slider.style.width = '150px';           
-    slider.style.maxWidth = '150px';        
-    slider.style.flexShrink = '1';      
+    slider.style.width = '150px';
+    slider.style.maxWidth = '150px';
+    slider.style.flexShrink = '1';
     sliderWrapper.appendChild(slider);
 
     const zoomInWrapper = document.createElement('div');
@@ -351,7 +351,7 @@ document.addEventListener("DOMContentLoaded", function() {
     zoomWrapper.appendChild(zoomInWrapper);
 
     leftContainer.appendChild(zoomWrapper);
-    
+
     slider.addEventListener('input', function () {
       userSelectedRowHeight = +this.value;
       if (currentSelectedReefs.length === 0) {
@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function() {
         drawHeatmap(currentMeta, currentMatrix);
       }
     });
-    
+
     zoomInIcon.addEventListener('click', () => {
       const newVal = Math.min(10, parseFloat(slider.value) + 0.2);
       slider.value = newVal.toFixed(2);

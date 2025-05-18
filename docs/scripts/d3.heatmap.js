@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
       justify-content: space-between;
       width: 1350px;
       box-sizing: border-box;
-      padding: 0px 40px 0px 40px;
+      padding: 10px 40px 0px 40px;
     }
     .tooltip {
       position: absolute;
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr("fill", "white")
       .attr("font-size", "12px")
       .attr("transform", (d, i) => `rotate(-45, ${66 + i * cellWidth + cellWidth / 2}, 40)`) // adjust rotation center
-      .text(d => d); 
+      .text(d => d);
 
       const seen = new Set();
       svg.selectAll(".rowLabel")
@@ -141,8 +141,8 @@ document.addEventListener("DOMContentLoaded", function() {
         .attr("fill", "white")
         .attr("font-size", "15px")
         .text(d => {
-          if (currentSelectedReefs.length > 0) return `${d.reef} [${d.id}]`;
-          const roundedLat = (Math.round(d.lat * 5) / 5).toFixed(1);  // Closest to 0.2
+          if (currentSelectedReefs.length > 0) return d.reef;
+          const roundedLat = (Math.round(d.lat * 5) / 5).toFixed(1);
           if (!seen.has(roundedLat)) {
             seen.add(roundedLat);
             const degrees = Math.floor(Math.abs(d.lat));
@@ -312,9 +312,9 @@ document.addEventListener("DOMContentLoaded", function() {
     slider.step = 0.1;
     slider.value = currentRowHeight;
     slider.style.cursor = 'pointer';
-    slider.style.width = '150px';           
-    slider.style.maxWidth = '150px';        
-    slider.style.flexShrink = '1';      
+    slider.style.width = '150px';
+    slider.style.maxWidth = '150px';
+    slider.style.flexShrink = '1';
     sliderWrapper.appendChild(slider);
 
     const zoomInWrapper = document.createElement('div');
@@ -332,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function() {
     zoomWrapper.appendChild(zoomInWrapper);
 
     leftContainer.appendChild(zoomWrapper);
-    
+
     slider.addEventListener('input', function () {
       userSelectedRowHeight = +this.value;
       if (currentSelectedReefs.length === 0) {
@@ -351,7 +351,7 @@ document.addEventListener("DOMContentLoaded", function() {
         drawHeatmap(currentMeta, currentMatrix);
       }
     });
-    
+
     zoomInIcon.addEventListener('click', () => {
       const newVal = Math.min(10, parseFloat(slider.value) + 0.2);
       slider.value = newVal.toFixed(2);

@@ -9,23 +9,34 @@ format:
 ---
 
 <style>
-  h1.title { display: none; }
-  
-   main.content {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+  h1.title {
+    display: none;
   }
 
+  body {
+    overflow: hidden; /* disables scrolling on main page */
+  }
+
+  iframe {
+    overflow: auto;
+    border: none;
+  }
+
+  main.content {
+    margin-top: 80 !important;
+    padding-top: 0 !important;
+  }
 </style>
+
 
 :::{.column-page}
 
 
 <iframe 
   width="1450" 
-  height="6000" 
+  height="1200" 
   src="d3.html" 
-  scrolling="no"
+  scrolling="yes"
   title="Webpage example">
 </iframe>
 
